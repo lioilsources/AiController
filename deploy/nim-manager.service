@@ -1,0 +1,19 @@
+[Unit]
+Description=NIM Model Manager
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+Environment=NIM_CONFIG=/opt/nim-manager/config/models.yaml
+Environment=NIM_STATE=/var/lib/nim-manager/state.json
+Environment=NIM_ADDR=:8080
+ExecStart=/usr/local/bin/nim-manager
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
