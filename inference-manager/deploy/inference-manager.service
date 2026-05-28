@@ -1,0 +1,19 @@
+[Unit]
+Description=Inference Manager
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+Environment=INFERENCE_CONFIG=/opt/inference-manager/config/models.yaml
+Environment=INFERENCE_STATE=/var/lib/inference-manager/state.json
+Environment=INFERENCE_ADDR=:8080
+ExecStart=/usr/local/bin/inference-manager
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

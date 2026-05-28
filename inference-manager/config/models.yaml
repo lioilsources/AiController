@@ -1,0 +1,9 @@
+models:
+  llm-dev:
+    compose_file: /opt/nim/llm-dev/docker-compose.yml
+    health_url: http://localhost:8001/v1/health/ready
+    alias: llm-dev
+  llm-lab:
+    compose_file: /opt/nim/llm-lab/docker-compose.yml
+    health_url: http://localhost:8002/v1/health/ready
+    alias: llm-lab
