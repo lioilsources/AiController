@@ -2,14 +2,14 @@
 
 ## Context
 
-New project `/home/ol1n/ai-stack` that extends the existing `llm-stack` patterns into a clean, modular AI inference platform. Three modules: LLM serving (vLLM + LiteLLM), image generation (FLUX + Qwen image editing), and OCR (Qwen2.5-VL). Docker-compose infra is strictly separated from FastAPI service code. No DB, no file storage, no ComfyUI. Pure stateless JSON APIs.
+New project `~/ai-stack` that extends the existing `llm-stack` patterns into a clean, modular AI inference platform. Three modules: LLM serving (vLLM + LiteLLM), image generation (FLUX + Qwen image editing), and OCR (Qwen2.5-VL). Docker-compose infra is strictly separated from FastAPI service code. No DB, no file storage, no ComfyUI. Pure stateless JSON APIs.
 
 ---
 
 ## Project Structure
 
 ```
-/home/ol1n/ai-stack/
+~/ai-stack/
 ├── docker-compose.yml              # Root: Caddy + include: modules + shared network
 ├── docker-compose.llm.yaml         # vLLM lab + vLLM dev + LiteLLM
 ├── docker-compose.image.yaml       # image-api service
@@ -163,11 +163,11 @@ HF_TOKEN=hf_...
 VLLM_VERSION=26.03.post1-py3
 HF_MODEL_LAB=openai/gpt-oss-120b
 HF_MODEL_DEV=nvidia/Gemma-4-31B-IT-NVFP4
-CACHE_LAB=/home/ol1n/llm-stack/cache/lab
-CACHE_DEV=/home/ol1n/llm-stack/cache/dev
-CACHE_FLUX=/home/ol1n/ai-stack/cache/flux
-CACHE_QWEN_IMAGE=/home/ol1n/llm-stack/cache/img   # already downloaded!
-CACHE_QWEN_VL=/home/ol1n/ai-stack/cache/qwen-vl
+CACHE_LAB=~/llm-stack/cache/lab
+CACHE_DEV=~/llm-stack/cache/dev
+CACHE_FLUX=~/ai-stack/cache/flux
+CACHE_QWEN_IMAGE=~/llm-stack/cache/img   # already downloaded!
+CACHE_QWEN_VL=~/ai-stack/cache/qwen-vl
 FLUX_MODEL_ID=black-forest-labs/FLUX.1-dev
 QWEN_IMAGE_MODEL_ID=Qwen/Qwen-Image-Edit-2511
 OCR_MODEL_ID=Qwen/Qwen2.5-VL-7B-Instruct
@@ -180,14 +180,14 @@ LOAD_QWEN_IMAGE=1
 
 ## Implementation Steps
 
-1. `mkdir -p /home/ol1n/ai-stack/{services/image-api,services/ocr-api,scripts,cache/{lab,dev,flux,qwen-image,qwen-vl}}`
+1. `mkdir -p ~/ai-stack/{services/image-api,services/ocr-api,scripts,cache/{lab,dev,flux,qwen-image,qwen-vl}}`
 2. Write `docker-compose.yml`, `docker-compose.llm.yaml`, `docker-compose.image.yaml`, `docker-compose.ocr.yaml`
 3. Write `Caddyfile`, `litellm_config.yaml`
 4. Write `services/image-api/{Dockerfile,requirements.txt,main.py}`
 5. Write `services/ocr-api/{Dockerfile,requirements.txt,main.py}`
 6. Write `scripts/download_flux.sh`, `scripts/download_qwen_vl.sh`; `chmod +x scripts/*.sh`
 7. Write `.env.example`, `.gitignore`
-8. `cp .env.example .env` — set `CACHE_QWEN_IMAGE=/home/ol1n/llm-stack/cache/img` and fill `HF_TOKEN`
+8. `cp .env.example .env` — set `CACHE_QWEN_IMAGE=~/llm-stack/cache/img` and fill `HF_TOKEN`
 9. Download: `bash scripts/download_qwen_vl.sh` (~17 GB), then `bash scripts/download_flux.sh` (~24 GB)
 10. `docker compose build`
 11. Smoke-test OCR: `docker compose -f docker-compose.ocr.yaml up -d && curl http://localhost:8003/health`

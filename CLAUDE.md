@@ -40,7 +40,7 @@ In production: started via AiStack `make up` (docker-compose.yml), port 8090.
 `config/models.yaml`:
 ```yaml
 dev:
-  compose_file: /home/ol1n/deploy/AiStack/deploy/docker-compose.llm.yaml
+  compose_file: /abs/path/to/AiStack/deploy/docker-compose.llm.yaml
   health_url: http://dev:8000/v1/models
   alias: dev
 ```
